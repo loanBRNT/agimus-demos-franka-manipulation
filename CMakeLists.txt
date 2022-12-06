@@ -29,3 +29,10 @@ INSTALL_DEMO_LAUNCH_FILES(franka manipulation
   simulation.launch
   demo.launch
   )
+
+INSTALL(FILES
+  urdf/demo.urdf.xacro
+  urdf/franka_robot.xacro
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/urdf
+  )

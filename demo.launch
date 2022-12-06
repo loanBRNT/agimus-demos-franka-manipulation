@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="simulation" default="false"/>
+  <include file="$(find sot_universal_robot)/launch/controller.launch">
+    <arg name="simulation" value="$(arg simulation)"/>
+    <arg name="robot" value="franka"/>
+  </include>
+</launch>

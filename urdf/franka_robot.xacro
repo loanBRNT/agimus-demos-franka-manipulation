@@ -3,7 +3,7 @@
   <xacro:macro name="franka_robot" params="arm_id joint_limits">
     <!-- Name of this panda -->
     <!-- Should a franka_gripper be mounted at the flange?" -->
-    <xacro:arg name="hand" default="false" />
+    <xacro:arg name="hand" default="true" />
     <!-- Positional offset between $(arm_id)_hand -> $(arm_id)_hand_tcp [m]. Only used when hand:=true -->
     <xacro:arg name="tcp_xyz" default="0 0 0.1034" />
     <!-- Rotational offset between $(arm_id)_hand -> $(arm_id)_hand_tcp [rad]. Only used when hand:=true -->
@@ -17,7 +17,7 @@
     <xacro:franka_arm arm_id="${arm_id}" safety_distance="0.03" gazebo="$(arg gazebo)" joint_limits="${joint_limits}"/>
 
     <xacro:if value="$(arg hand)">
-      <xacro:include filename="$(find franka_description)/robots/common/franka_hand.xacro"/>
+      <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/franka_hand.xacro"/>
       <xacro:franka_hand
           arm_id="$(arg arm_id)"
           rpy="0 0 ${-pi/4}"
@@ -29,51 +29,8 @@
        />
     </xacro:if>
 
-      <link name="support_link">
-        <inertial>
-          <mass value="200"/>
-          <origin xyz="0 0 0.45"/>
-          <inertia ixx="50"  ixy="0"  ixz="0" iyy="50" iyz="0" izz="50" />
-        </inertial>
-        <visual>
-          <origin xyz="0 0 0.38"/>
-          <geometry>
-	    <box size="1.703 0.803 0.76"/>
-          </geometry>
-        </visual>
-        <collision>
-          <origin xyz="0 0 0.38"/>
-          <geometry>
-	    <box size="1.703 0.803 0.76"/>
-          </geometry>
-        </collision>
-        <visual>
-          <origin xyz="-0.61 0.2215 0.77"/>
-          <geometry>
-	    <box size="0.363 0.252 0.02"/>
-          </geometry>
-        </visual>
-        <collision>
-          <origin xyz="-0.61 0.2215 0.77"/>
-          <geometry>
-	    <box size="0.363 0.252 0.02"/>
-          </geometry>
-        </collision>
-      </link>
-      <!-- Gazebo requires a joint to a link called "world" for statically mounted robots -->
-      <link name="world" />
-      <joint name="world_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <parent link="world" />
-        <child  link="support_link" />
-      </joint>
-
-      <joint name="support_joint" type="fixed">
-        <origin xyz="-0.5365 0.2215 .78" rpy="0 0 0" />
-        <parent link="support_link" />
-        <child  link="$(arg arm_id)_link0" />
-      </joint>
-
+    <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/support.urdf.xacro"/>
+    <xacro:support/>
     <!-- Define additional Gazebo tags -->
     <xacro:if value="$(arg gazebo)">
 

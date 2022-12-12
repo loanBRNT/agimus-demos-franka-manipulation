@@ -22,6 +22,27 @@
 
   <!-- Remove collision between all regular links -->
 
+  <disable_collisions link1="panda_link0" link2="panda_link1"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link2"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link3"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link4"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link5"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link6"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_link7"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_hand"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_leftfinger"
+                      reason="self-collision handled separately"/>
+  <disable_collisions link1="panda_link0" link2="panda_rightfinger"
+                      reason="self-collision handled separately"/>
+
   <disable_collisions link1="panda_link1" link2="panda_link2"
                       reason="self-collision handled separately"/>
   <disable_collisions link1="panda_link1" link2="panda_link3"

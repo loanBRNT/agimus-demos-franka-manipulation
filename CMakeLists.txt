@@ -46,3 +46,10 @@ INSTALL(FILES
   DESTINATION
   ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/srdf
   )
+
+INSTALL(FILES
+  supervisor.py
+  demo.yaml
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation
+  )

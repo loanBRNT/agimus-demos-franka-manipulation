@@ -53,3 +53,10 @@ INSTALL(FILES
   DESTINATION
   ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation
   )
+
+INSTALL(PROGRAMS
+  scripts/gripper_control.py
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts
+  RENAME franka_manipulation_gripper_control.py
+  )

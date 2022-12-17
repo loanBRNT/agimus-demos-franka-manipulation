@@ -25,7 +25,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 from math import pi, sqrt
-from hpp.corbaserver import loadServerPlugin
+from hpp.corbaserver import loadServerPlugin, shrinkJointRange
 from hpp.corbaserver.manipulation import Robot, \
     createContext, newProblem, ProblemSolver, ConstraintGraph, \
     ConstraintGraphFactory, Rule, Constraints, CorbaClient, SecurityMargins
@@ -56,6 +56,7 @@ loadServerPlugin (defaultContext, "manipulation-corba.so")
 newProblem()
 
 robot = Robot("robot", "panda", rootJointType="anchor")
+shrinkJointRange(robot, [f'panda/panda_joint{i}' for i in range(1,8)],0.95)
 ps = ProblemSolver(robot)
 
 ps.addPathOptimizer("EnforceTransitionSemantic")

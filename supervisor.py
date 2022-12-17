@@ -25,9 +25,67 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import time
+import numpy as np
+from dynamic_graph.ros import RosPublish, RosSubscribe
 from agimus_sot.action import Action
+from franka_gripper.msg import GraspActionGoal, MoveActionGoal
 
 Action.maxControlSqrNorm = 20
+
+
+class OpenGripper(object):
+    """
+    Preaction that opens the gripper by publishing on ros topic
+    /franka_gripper/move/goal
+    """
+    # Timeout for opening the gripper
+    timeout = 5
+    # Tolerance to consider that the gripper is open
+    eps = 0.001
+    def __init__(self, robot, moveActionGoal):
+        self.robot = robot
+        self.moveActionGoal = moveActionGoal
+        self.ros_publish = RosPublish("pub_OpenGripper")
+        signal_name = 'sout'
+        self.ros_publish.add('vector', signal_name, '/agimus/sot/open_gripper')
+        self.signal = self.ros_publish.signal(signal_name)
+
+    def __call__(self):
+        # Send command
+        self.signal.value = np.array([self.moveActionGoal.goal.width,
+                                      self.moveActionGoal.goal.speed])
+        t = self.robot.device.state.time
+        self.ros_publish.signal("trigger").recompute(t)
+        # wait for 3 seconds
+        time.sleep(3.)
+        return True, ""
+
+class CloseGripper(object):
+    """
+    Preaction that opens the gripper by publishing on ros topic
+    /franka_gripper/move/goal
+    """
+    # Tolerance to consider that the gripper is open
+    eps = 0.001
+    def __init__(self, robot, graspActionGoal):
+        self.robot = robot
+        self.graspActionGoal = graspActionGoal
+        self.ros_publish = RosPublish("pub_CloseGripper")
+        signal_name = 'sout'
+        self.ros_publish.add('vector', signal_name, '/agimus/sot/close_gripper')
+        self.signal = self.ros_publish.signal(signal_name)
+
+    def __call__(self):
+        self.signal.value = np.array([self.graspActionGoal.goal.width,
+        self.graspActionGoal.goal.epsilon.inner,
+        self.graspActionGoal.goal.epsilon.outer,
+        self.graspActionGoal.goal.speed,
+        self.graspActionGoal.goal.force,])
+        t = self.robot.device.state.time
+        self.ros_publish.signal("trigger").recompute(t)
+        time.sleep(3.)
+        return True, ""
+
 
 def makeSupervisorWithFactory(robot):
     from agimus_sot import Supervisor
@@ -90,11 +148,29 @@ def makeSupervisorWithFactory(robot):
     factory.setupContactFrames(srdf["contacts"])
     factory.generate()
 
+    moveActionGoal = MoveActionGoal()
+    moveActionGoal.goal.width = 0.08
+    moveActionGoal.goal.speed = 0.1
+    openGripper = OpenGripper(robot, moveActionGoal)
+    graspActionGoal = GraspActionGoal()
+    graspActionGoal.goal.width = 0.05
+    graspActionGoal.goal.epsilon.inner = 0.005
+    graspActionGoal.goal.epsilon.outer = 0.005
+    graspActionGoal.goal.speed = 0.1
+    graspActionGoal.goal.force = 200.
+    closeGripper = CloseGripper(robot, graspActionGoal)
+    ig = 0; g = factory.grippers[ig]
+    for ih, h in enumerate(factory.handles):
+        # Add preaction to open the gripper
+        transitionName_12 = f'{g} > {h} | f_12'
+        supervisor.actions[transitionName_12].preActions.append(openGripper)
+        transitionName_23 = f'{g} > {h} | f_23'
+        supervisor.actions[transitionName_23].preActions.append(closeGripper)
+        transitionName_21 = f'{g} < {h} | {ig}-{ih}_21'
+        supervisor.actions[transitionName_21].preActions.append(openGripper)
     supervisor.makeInitialSot()
     return factory, supervisor
 
-
-# Use service /agimus/sot/set_base_pose to set initial config
 factory, supervisor = makeSupervisorWithFactory(robot)
 
 supervisor.plugTopicsToRos()

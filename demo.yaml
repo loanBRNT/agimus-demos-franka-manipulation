@@ -1,0 +1,23 @@
+demo:
+  robots:
+    panda:
+      srdf:
+        package: agimus_demos
+        file: franka/manipulation/srdf/demo.srdf
+  objects:
+    box:
+      urdf:
+        package: agimus_demos
+        file: franka/manipulation/urdf/small_box.urdf
+      srdf:
+        package: agimus_demos
+        file: franka/manipulation/srdf/small_box.srdf
+      contacts:
+        [box/box_surface]
+  grippers:
+    [panda/gripper,]
+  contact surfaces:
+    [panda/top,]
+
+sot:
+  robot: franka

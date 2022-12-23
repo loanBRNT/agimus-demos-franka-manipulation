@@ -29,3 +29,34 @@ INSTALL_DEMO_LAUNCH_FILES(franka manipulation
   simulation.launch
   demo.launch
   )
+
+INSTALL(FILES
+  urdf/small_box.urdf
+  urdf/demo.urdf.xacro
+  urdf/franka_hand.xacro
+  urdf/franka_robot.xacro
+  urdf/support.urdf.xacro
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/urdf
+  )
+
+INSTALL(FILES
+  srdf/small_box.srdf
+  srdf/demo.srdf
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/srdf
+  )
+
+INSTALL(FILES
+  supervisor.py
+  demo.yaml
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation
+  )
+
+INSTALL(PROGRAMS
+  scripts/gripper_control.py
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/scripts
+  RENAME franka_manipulation_gripper_control.py
+  )

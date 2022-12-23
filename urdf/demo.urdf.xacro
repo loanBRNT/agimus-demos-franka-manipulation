@@ -9,4 +9,5 @@
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/panda/joint_limits.yaml')}">
   </xacro:franka_robot>
 
+  <!-- wall behind the table -->
 </robot>

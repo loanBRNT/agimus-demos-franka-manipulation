@@ -32,6 +32,26 @@
           </geometry>
         </collision>
       </link>
+
+      <link name="wall_link">
+        <inertial>
+          <mass value="200"/>
+          <origin xyz="0 0 1."/>
+          <inertia ixx="50"  ixy="0"  ixz="0" iyy="50" iyz="0" izz="50" />
+        </inertial>
+        <visual>
+          <origin xyz="0 0 1.0"/>
+          <geometry>
+            <box size="3.0 0.1 2.0"/>
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0 0 1.0"/>
+          <geometry>
+            <box size="3.0 0.1 2.0"/>
+          </geometry>
+        </collision>
+      </link>
       <!-- Gazebo requires a joint to a link called "world" for statically mounted robots -->
       <link name="world" />
       <joint name="world_joint" type="fixed">
@@ -44,6 +64,11 @@
         <origin xyz="-0.5365 0.2215 .78" rpy="0 0 0" />
         <parent link="support_link" />
         <child  link="$(arg arm_id)_link0" />
+      </joint>
+      <joint name="wall_joint" type="fixed">
+        <origin xyz="0 1.07 0" />
+        <parent link="world"/>
+        <child link="wall_link"/>
       </joint>
   </xacro:macro>
 </robot>

@@ -2,7 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
 
   <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/franka_robot.xacro"/>
+  <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/support.urdf.xacro"/>
 
+  <xacro:support/>
   <xacro:arg name="arm_id" default="panda" />
 
   <xacro:franka_robot arm_id="$(arg arm_id)"

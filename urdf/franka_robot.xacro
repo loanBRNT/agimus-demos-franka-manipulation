@@ -29,8 +29,6 @@
        />
     </xacro:if>
 
-    <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/support.urdf.xacro"/>
-    <xacro:support/>
     <!-- Define additional Gazebo tags -->
     <xacro:if value="$(arg gazebo)">
 

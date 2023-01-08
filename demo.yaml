@@ -1,6 +1,6 @@
 demo:
   robots:
-    panda:
+    pandas:
       srdf:
         package: agimus_demos
         file: franka/manipulation/srdf/demo.srdf
@@ -15,9 +15,9 @@ demo:
       contacts:
         [box/box_surface]
   grippers:
-    [panda/gripper,]
+    [pandas/panda1_gripper,]
   contact surfaces:
-    [panda/top,]
+    [pandas/top,]
 
 sot:
   robot: franka

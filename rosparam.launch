@@ -1,0 +1,11 @@
+<!-- I could not find a better way to set several instances of those parameters
+     by substituting different values in the same yaml file -->
+<launch>
+  <arg name="arm_id" default="panda"/>
+  <rosparam command="load"
+            file="$(find franka_gazebo)/config/franka_hw_sim.yaml"
+            subst_value="true"/>
+  <rosparam command="load"
+            file="$(find franka_gazebo)/config/sim_controllers.yaml"
+            subst_value="true"/>
+</launch>

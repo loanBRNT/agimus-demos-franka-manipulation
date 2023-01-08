@@ -63,7 +63,7 @@
       <joint name="support_joint" type="fixed">
         <origin xyz="-0.5365 0.2215 .78" rpy="0 0 0" />
         <parent link="support_link" />
-        <child  link="$(arg arm_id)_link0" />
+        <child  link="panda1_link0" />
       </joint>
       <joint name="wall_joint" type="fixed">
         <origin xyz="0 1.07 0" />

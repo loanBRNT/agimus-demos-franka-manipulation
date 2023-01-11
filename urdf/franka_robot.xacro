@@ -25,6 +25,39 @@
         gazebo="$(arg gazebo)"
         />
 
+    <!-- D435 camera -->
+    <xacro:property name="camera_pose_file"
+                    value="$(find agimus_demos)/franka/manipulation/config/calibrated-params.yaml" />
+    <xacro:property name="camera_pose" value="${load_yaml(camera_pose_file)}"/>
+
+    <link name="ref_camera_link"/>
+    <joint name="ref_camera_joint" type="fixed">
+      <parent link="${arm_id}_hand"/>
+      <child link="ref_camera_link"/>
+      <origin xyz="${camera_pose['camera']['x']}
+                   ${camera_pose['camera']['y']}
+                   ${camera_pose['camera']['z']}"
+	      rpy="${camera_pose['camera']['roll']}
+                   ${camera_pose['camera']['pitch']}
+                   ${camera_pose['camera']['yaw']}"/>
+    </joint>
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+    <xacro:sensor_d435 parent="ref_camera_link" name="camera" use_nominal_extrinsics="true">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:sensor_d435>
+
+    <xacro:if value="$(arg gazebo)">
+      <xacro:include filename="$(find agimus_demos)/urdf/_d435.gazebo.xacro"/>
+      <xacro:gazebo_d435 camera_name="d435" reference_link="ref_camera_link"
+                         topics_ns="camera"
+                         depth_optical_frame="camera_depth_optical_frame"
+                         color_optical_frame="camera_color_optical_frame"
+                         infrared1_optical_frame="camera_infrared1_optical_frame"
+                         infrared2_optical_frame="camera_infrared2_optical_frame">
+      </xacro:gazebo_d435>
+    </xacro:if>
+
     <!-- Define additional Gazebo tags -->
     <xacro:if value="$(arg gazebo)">
 

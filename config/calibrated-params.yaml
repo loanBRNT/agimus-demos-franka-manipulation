@@ -1,0 +1,8 @@
+# Pose of ref_camera_link in hand
+camera:
+  x: 0.02
+  y: 0.0
+  z: 0.04
+  roll: 3.14159265
+  pitch: -1.57079633
+  yaw: 0.0

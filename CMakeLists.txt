@@ -49,6 +49,12 @@ INSTALL(FILES
   )
 
 INSTALL(FILES
+  config/calibrated-params.yaml
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/config
+  )
+
+INSTALL(FILES
   supervisor.py
   demo.yaml
   DESTINATION

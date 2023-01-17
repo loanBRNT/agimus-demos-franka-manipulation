@@ -26,9 +26,10 @@
 
 INSTALL_DEMO_LAUNCH_FILES(franka manipulation
   LAUNCHFILES
-  simulation.launch
   demo.launch
+  robot.launch
   rosparam.launch
+  simulation.launch
   )
 
 INSTALL(FILES

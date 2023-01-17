@@ -19,6 +19,8 @@
                 -J panda1_finger_joint1 0.001
                 -J panda1_finger_joint2 0.001"
        />
+  <!-- Calibration setup adds a chessboard on the support-->
+  <arg name="calibration" default="false"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="worlds/empty.world"/>
     <!-- Always start in paused mode, and only unpause when spawning the model -->
@@ -31,7 +33,8 @@
   <param name="robot_description"
          command="xacro $(find agimus_demos)/franka/manipulation/urdf/demo.urdf.xacro
                   gazebo:=true
-                  hand:=true">
+                  hand:=true
+                  calibration:=$(arg calibration)">
   </param>
 
   <include file="$(find agimus_demos)/launch/franka_manipulation_rosparam.launch">

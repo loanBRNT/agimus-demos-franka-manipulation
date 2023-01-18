@@ -62,6 +62,12 @@ INSTALL(FILES
   ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation
   )
 
+INSTALL(FILES
+  meshes/camera-support.stl
+  DESTINATION
+  ${CATKIN_PACKAGE_SHARE_DESTINATION}/franka/manipulation/meshes
+  )
+
 INSTALL(PROGRAMS
   scripts/gripper_control.py
   DESTINATION

@@ -56,7 +56,7 @@ loadServerPlugin (defaultContext, "manipulation-corba.so")
 newProblem()
 
 robot = Robot("robot", "pandas", rootJointType="anchor")
-shrinkJointRange(robot, [f'pandas/panda1_joint{i}' for i in range(1,8)],0.95)
+shrinkJointRange(robot, [f'pandas/panda2_joint{i}' for i in range(1,8)],0.95)
 ps = ProblemSolver(robot)
 
 ps.addPathOptimizer("EnforceTransitionSemantic")
@@ -101,28 +101,28 @@ factory.setObjects(["box",], [handles], [boxContactSurfaces])
 factory.environmentContacts(envContactSurfaces)
 factory.generate()
 SecurityMargins.separators.append('_')
-sm = SecurityMargins(ps, factory, ["pandas/panda1", "box"])
-sm.setSecurityMarginBetween("pandas/panda1", "box", 0.03)
-sm.setSecurityMarginBetween("pandas/panda1", "pandas/panda1", 0)
+sm = SecurityMargins(ps, factory, ["pandas/panda2", "box"])
+sm.setSecurityMarginBetween("pandas/panda2", "box", 0.03)
+sm.setSecurityMarginBetween("pandas/panda2", "pandas/panda2", 0)
 sm.defaultMargin = 0.05
 sm.apply()
 ## deactivate collision between gripper and contact surfaces on transition that
 #  go to or come from contact.
-edges = ['pandas/panda1_gripper > box/handle | f_12',
-         'pandas/panda1_gripper < box/handle | 0-0_21',
-         'pandas/panda1_gripper > box/handle | f_23',
-         'pandas/panda1_gripper < box/handle | 0-0_32',
-         'pandas/panda1_gripper > box/handle2 | f_12',
-         'pandas/panda1_gripper < box/handle2 | 0-1_21',
-         'pandas/panda1_gripper > box/handle2 | f_23',
-         'pandas/panda1_gripper < box/handle2 | 0-1_32',]
-joints = sm.gripperToJoints['pandas/panda1_gripper']
+edges = ['pandas/panda2_gripper > box/handle | f_12',
+         'pandas/panda2_gripper < box/handle | 0-0_21',
+         'pandas/panda2_gripper > box/handle | f_23',
+         'pandas/panda2_gripper < box/handle | 0-0_32',
+         'pandas/panda2_gripper > box/handle2 | f_12',
+         'pandas/panda2_gripper < box/handle2 | 0-1_21',
+         'pandas/panda2_gripper > box/handle2 | f_23',
+         'pandas/panda2_gripper < box/handle2 | 0-1_32',]
+joints = sm.gripperToJoints['pandas/panda2_gripper']
 for edge in edges:
     for j in joints:
         graph.setSecurityMarginForEdge(edge, 'universe', j, 0)
 # Lock gripper in open position.
-ps.createLockedJoint('locked_finger_1', 'pandas/panda1_finger_joint1', [0.035])
-ps.createLockedJoint('locked_finger_2', 'pandas/panda1_finger_joint2', [0.035])
+ps.createLockedJoint('locked_finger_1', 'pandas/panda2_finger_joint1', [0.035])
+ps.createLockedJoint('locked_finger_2', 'pandas/panda2_finger_joint2', [0.035])
 graph.addConstraints(graph=True,
                      constraints = Constraints(numConstraints =
                         ['locked_finger_1', 'locked_finger_2']))

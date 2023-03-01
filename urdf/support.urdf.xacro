@@ -19,7 +19,7 @@
 	    <box size="1.703 0.803 0.76"/>
           </geometry>
         </collision>
-        <visual>
+        <!--visual>
           <origin xyz="-0.61 0.2215 0.77"/>
           <geometry>
 	    <box size="0.363 0.252 0.02"/>
@@ -29,6 +29,18 @@
           <origin xyz="-0.61 0.2215 0.77"/>
           <geometry>
 	    <box size="0.363 0.252 0.02"/>
+          </geometry>
+        </collision-->
+        <visual>
+          <origin xyz="0.6385 -0.1655 0.77"/>
+          <geometry>
+            <box size="0.3 0.3 0.02"/>
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0.6385 -0.1655 0.77"/>
+          <geometry>
+            <box size="0.3 0.3 0.02"/>
           </geometry>
         </collision>
       </link>
@@ -52,6 +64,29 @@
           </geometry>
         </collision>
       </link>
+      <!-- Wrap panda1 robot into a box shaped obstacle -->
+      <link name="panda1_box">
+        <inertial>
+          <mass value="100"/>
+          <origin xyz="0 0 0"/>
+          <inertia ixx="25"  ixy="0"  ixz="0" iyy="25" iyz="0" izz="25" />
+        </inertial>
+        <collision>
+          <origin xyz="0 0 0"/>
+          <geometry>
+            <box size="0.44 0.803 0.80"/>
+          </geometry>
+        </collision>
+        <visual>
+          <origin xyz="0 0 0"/>
+          <geometry>
+            <box size="0.44 0.803 0.80"/>
+          </geometry>
+          <material name="lightGrey">
+            <color rgba="0.9 0.9 0.9 0.5"/>
+          </material>
+        </visual>
+      </link>
       <!-- Gazebo requires a joint to a link called "world" for statically mounted robots -->
       <link name="world" />
       <joint name="world_joint" type="fixed">
@@ -61,14 +96,19 @@
       </joint>
 
       <joint name="support_joint" type="fixed">
-        <origin xyz="-0.5365 0.2215 .78" rpy="0 0 0" />
+        <origin xyz="0.563 -0.1655 .78" rpy="0 0 ${pi}" />
         <parent link="support_link" />
-        <child  link="panda1_link0" />
+        <child  link="panda2_link0" />
       </joint>
       <joint name="wall_joint" type="fixed">
         <origin xyz="0 1.07 0" />
         <parent link="world"/>
         <child link="wall_link"/>
+      </joint>
+      <joint name="panda1_box_joint" type="fixed">
+        <origin xyz="-0.6315 0 1.17" />
+        <parent link="world"/>
+        <child link="panda1_box"/>
       </joint>
   </xacro:macro>
 </robot>

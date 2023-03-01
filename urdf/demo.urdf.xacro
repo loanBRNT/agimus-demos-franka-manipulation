@@ -4,7 +4,7 @@
   <xacro:include filename="$(find agimus_demos)/franka/manipulation/urdf/support.urdf.xacro"/>
 
   <xacro:support/>
-  <xacro:franka_robot arm_id="panda1"
+  <xacro:franka_robot arm_id="panda2"
                       joint_limits="${xacro.load_yaml('$(find franka_description)/robots/panda/joint_limits.yaml')}">
   </xacro:franka_robot>
 

@@ -15,7 +15,7 @@ demo:
       contacts:
         [box/box_surface]
   grippers:
-    [pandas/panda1_gripper,]
+    [pandas/panda2_gripper,]
   contact surfaces:
     [pandas/top,]
 

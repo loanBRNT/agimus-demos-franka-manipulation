@@ -8,7 +8,7 @@
   <include file="$(find sot_universal_robot)/launch/controller.launch">
     <arg name="simulation" value="$(arg simulation)"/>
     <arg name="robot" value="franka"/>
-    <arg name="arm_id" value="panda1"/>
+    <arg name="arm_id" value="panda2"/>
   </include>
 
   <!--This starts the HPP interface in namespace agimus/hpp-->

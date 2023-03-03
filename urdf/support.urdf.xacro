@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:macro name="support" params="chessboard">
+  <xacro:macro name="support" params="">
       <link name="support_link">
         <inertial>
           <mass value="200"/>
@@ -31,15 +31,6 @@
 	    <box size="0.363 0.252 0.02"/>
           </geometry>
         </collision>
-        <xacro:if value="${chessboard}">
-          <!-- calibration chessboard-->
-          <visual>
-            <origin xyz="0 0 .761" rpy="0 0 0"/>
-            <geometry>
-	      <mesh filename="package://gerard_bauzil/meshes/visp/chessboard-10-7.dae" scale="0.027 0.027 1."/>
-            </geometry>
-          </visual>
-        </xacro:if>
       </link>
 
       <link name="wall_link">

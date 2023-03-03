@@ -5,14 +5,11 @@
   <arg name="arm_id" default="$(arg robot)" />
   <arg name="load_gripper" default="true" />
   <arg name="xacro_args" default="" />
-  <!-- Calibration setup adds a chessboard on the support-->
-  <arg name="calibration" default="false"/>
 
   <param name="robot_description"
          command="xacro $(find agimus_demos)/franka/manipulation/urdf/demo.urdf.xacro
                   gazebo:=false
-                  hand:=true
-                  calibration:=$(arg calibration)">
+                  hand:=true">
   </param>
 
   <include file="$(find franka_gripper)/launch/franka_gripper.launch" if="$(arg load_gripper)">

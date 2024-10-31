@@ -38,16 +38,10 @@ from bin_picking import BinPicking
 
 connectedToRos = False
 
-try:
-    import rospy
-    Robot.urdfString = rospy.get_param('robot_description')
-    print("reading URDF from ROS param")
-    connectedToRos = True
-except:
-    print("reading generic URDF")
-    from hpp.rostools import process_xacro, retrieve_resource
-    Robot.urdfString = process_xacro\
-      ("package://agimus_demos/franka/manipulation/urdf/demo.urdf.xacro")
+print("reading generic URDF")
+from hpp.rostools import process_xacro, retrieve_resource
+Robot.urdfString = process_xacro\
+    ("package://agimus_demos/franka/manipulation/urdf/demo.urdf.xacro")
 Robot.srdfString = ""
 
 class Box:
